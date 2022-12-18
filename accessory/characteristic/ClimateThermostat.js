@@ -9,7 +9,8 @@ const CLIMATE_THERMOSTAT_CONFIG = {
     coolingItem: "coolingItem",
     coolingItemInverted: "coolingItemInverted",
     modeItem: "modeItem",
-    modeItemCapability: "modeItemCapability"
+    modeItemCapability: "modeItemCapability",
+    modeItemHeatingCoolingValidValues: "modeItemHeatingCoolingValidValues"
 };
 
 function addCurrentHeatingCoolingStateCharacteristic(service) {
@@ -39,6 +40,12 @@ function addCurrentHeatingCoolingStateCharacteristic(service) {
                     });
                     break;
                 case "HeatingCooling":
+                    const modeItemHeatingCoolingValidValues = this._config[CLIMATE_THERMOSTAT_CONFIG.modeItemHeatingCoolingValidValues];
+                    if (modeItemHeatingCoolingValidValues) {
+                        currentHeatingCoolingStateCharacteristic.setProps({
+                            validValues: modeItemHeatingCoolingValidValues
+                        });
+                    }
                     break;
                 default:
                     throw new Error(`modeItemCapability has invalid value: ${modeItemCapability}`);
@@ -106,6 +113,12 @@ function addTargetHeatingCoolingStateCharacteristic(service) {
                     });
                     break;
                 case "HeatingCooling":
+                    const modeItemHeatingCoolingValidValues = this._config[CLIMATE_THERMOSTAT_CONFIG.modeItemHeatingCoolingValidValues];
+                    if (modeItemHeatingCoolingValidValues) {
+                        targetHeatingCoolingStateCharacteristic.setProps({
+                            validValues: modeItemHeatingCoolingValidValues
+                        });
+                    }
                     break;
                 default:
                     throw new Error(`modeItemCapability has invalid value: ${modeItemCapability}`);
